@@ -1,7 +1,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .board {
-  width: 100%;
+  width: 36rem;
   padding: 10px;
   margin-top: 5rem;
   background-color: #757575;
@@ -16,7 +16,7 @@
 <template>
   <div class="container">
     <h1>{{ msg }}</h1>
-    <v-card class="board">
+    <v-card class="board" v-on:keyup="keyHandler()">
       <v-layout row no-gutters v-for="row in size" :key="'r' + row">
         <v-flex
           v-for="column in size"
@@ -54,6 +54,53 @@ export default {
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    keyHandler(e) {
+      const keyCodes = {
+        ArrowUp: 'up',
+        ArrowDown: 'down',
+        ArrowRight: 'right',
+        ArrowLeft: 'left',
+      };
+      this.move(keyCodes[e.code] || undefined);
+    },
+    move(direction) {
+      switch (direction) {
+        case 'up':
+          this.up();
+          break;
+        case 'down':
+          this.down();
+          break;
+        case 'right':
+          this.right();
+          break;
+        case 'left':
+          this.left();
+          break;
+        default:
+          break;
+      }
+      this.addRandomTile();
+    },
+    up() {
+      console.log('Up');
+    },
+    down() {
+      console.log('Down');
+    },
+    left() {
+      console.log('Left');
+    },
+    right() {
+      console.log('Right');
+    },
+    addRandomTile() {
+      console.log('Adding random tile');
+    },
+  },
+  created() {
+    document.addEventListener('keyup', this.keyHandler);
+  },
 };
 </script>

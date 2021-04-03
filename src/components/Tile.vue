@@ -1,17 +1,25 @@
 <style scoped>
+.tile {
+  position: relative;
+  margin:0 auto;
+  background: red;
+    display: table;
+    width: 100%;
+    height: 100%;
+}
 </style>
 
 <template>
   <v-card
-    :class="`tile-${row}-${column}`"
-    :color="color" elevation="6"
+    :class="` tile tile-${row}-${column}`"
+    :color="getColor(number)" elevation="6"
     align="center"
     justify="center"
     :ref="'tile'+row+column"
-    @click="getHeight()">
-      <span>
-        {{row }}, {{column}}
-      </span>
+    >
+      <v-card-text>
+        <strong style="color: white; font-size: large;">{{number}}</strong>
+      </v-card-text>
   </v-card>
 </template>
 
@@ -27,6 +35,11 @@ export default {
       type: Number,
       required: true,
     },
+    number: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
     color: {
       type: String,
       required: false,
@@ -41,9 +54,20 @@ export default {
   },
   computed: {},
   methods: {
-    getHeight(ref) {
-      console.log(ref);
-      // console.log(_.get(this.$refs, `${ref}.$el.offsetWidth`, 'auto'));
+    getColor(number) {
+      const color = {
+        2: '#81C784',
+        4: '#66BB6A',
+        8: '#FDD835',
+        16: '#0277BD',
+        32: '#5E35B1',
+        64: '#C62828',
+        128: '#00897B',
+        256: '#66BB6A',
+        1024: '#2E7D32"',
+        2048: '##212121',
+      };
+      return color[number] || '#BDBDBD';
     },
   },
   mounted() {

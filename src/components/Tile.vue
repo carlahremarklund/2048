@@ -2,11 +2,17 @@
 </style>
 
 <template>
-  <div class="container">
-    <span>
-      {{row }}, {{column}}
-    </span>
-  </div>
+  <v-card
+    :class="`tile-${row}-${column}`"
+    :color="color" elevation="6"
+    align="center"
+    justify="center"
+    :ref="'tile'+row+column"
+    @click="getHeight()">
+      <span>
+        {{row }}, {{column}}
+      </span>
+  </v-card>
 </template>
 
 <script>
@@ -21,6 +27,11 @@ export default {
       type: Number,
       required: true,
     },
+    color: {
+      type: String,
+      required: false,
+      default: '#BDBDBD',
+    },
   },
 
   data() {
@@ -29,6 +40,13 @@ export default {
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    getHeight(ref) {
+      console.log(ref);
+      // console.log(_.get(this.$refs, `${ref}.$el.offsetWidth`, 'auto'));
+    },
+  },
+  mounted() {
+  },
 };
 </script>

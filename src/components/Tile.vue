@@ -16,9 +16,11 @@
     align="center"
     justify="center"
     :ref="'tile'+row+column"
+    width='8rem'
+    height='6rem'
     >
       <v-card-text>
-        <strong style="color: white; font-size: large;">{{number}}</strong>
+        <strong style="color: white; font-size: large; line-height: 4rem;">{{number}}</strong>
       </v-card-text>
   </v-card>
 </template>
@@ -38,7 +40,6 @@ export default {
     number: {
       type: Number,
       required: false,
-      default: 0,
     },
     color: {
       type: String,

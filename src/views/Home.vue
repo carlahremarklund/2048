@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div  data-app class="home">
     <Board msg="2048"/>
   </div>
 </template>

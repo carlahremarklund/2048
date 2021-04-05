@@ -2,6 +2,10 @@
 .tile {
   position: relative;
   margin:0 auto;
+  width: 8rem;
+  height: 6rem;
+  min-width: 4rem;
+  min-height: 5rem;
   background: red;
     display: table;
     width: 100%;
@@ -16,11 +20,9 @@
     align="center"
     justify="center"
     :ref="'tile'+row+column"
-    width='8rem'
-    height='6rem'
     >
       <v-card-text>
-        <strong style="color: white; font-size: large; line-height: 4rem;">{{number}}</strong>
+        <strong style="color: white; font-size: large; line-height: 3rem;">{{number}}</strong>
       </v-card-text>
   </v-card>
 </template>
@@ -68,7 +70,7 @@ export default {
         1024: '#2E7D32"',
         2048: '##212121',
       };
-      return color[number] || '#BDBDBD';
+      return color[number] || '#F5F5F5';
     },
   },
   mounted() {

@@ -94,6 +94,11 @@
     />
   </v-col>
   </v-row>
+  <v-text-field
+      label="Orientation"
+      hide-details="auto"
+      v-model="mobileEvent"
+    ></v-text-field>
   </div>
 </template>
 
@@ -126,6 +131,7 @@ export default {
       isGameOver: false,
       score: 0,
       name: '',
+      mobileEvent: null,
     };
   },
   computed: {
@@ -154,19 +160,7 @@ export default {
       this.direction(keyCodes[e.code] || undefined);
     },
     mobileHandler(event) {
-      // alpha: rotation around z-axis
-      const rotateDegrees = event.alpha;
-      // gamma: left to right
-      const leftToRight = event.gamma;
-      // beta: front back motion
-      const frontToBack = event.beta;
-
-      this.handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
-    },
-    handleOrientationEvent(frontToBack, leftToRight, rotateDegrees) {
-      alert(frontToBack);
-      alert(leftToRight);
-      alert(rotateDegrees);
+      this.mobileEvent = event.acceleration.x;
     },
     direction(direction) {
       switch (direction) {
@@ -336,8 +330,8 @@ export default {
     },
   },
   created() {
-    document.addEventListener('keyup', this.keyHandler);
-    window.addEventListener('deviceorientation', this.mobileHandler, true);
+    // document.addEventListener('keyup', this.keyHandler);
+    window.addEventListener('devicemotion', this.mobileHandler, true);
   },
   mounted() {
     this.init();

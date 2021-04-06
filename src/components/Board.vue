@@ -153,6 +153,21 @@ export default {
       };
       this.direction(keyCodes[e.code] || undefined);
     },
+    mobileHandler(event) {
+      // alpha: rotation around z-axis
+      const rotateDegrees = event.alpha;
+      // gamma: left to right
+      const leftToRight = event.gamma;
+      // beta: front back motion
+      const frontToBack = event.beta;
+
+      this.handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+    },
+    handleOrientationEvent(frontToBack, leftToRight, rotateDegrees) {
+      alert(frontToBack);
+      alert(leftToRight);
+      alert(rotateDegrees);
+    },
     direction(direction) {
       switch (direction) {
         case 'up':
@@ -322,6 +337,7 @@ export default {
   },
   created() {
     document.addEventListener('keyup', this.keyHandler);
+    window.addEventListener('deviceorientation', this.mobileHandler, true);
   },
   mounted() {
     this.init();

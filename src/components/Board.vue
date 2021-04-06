@@ -26,7 +26,17 @@
     md="6"
     >
     <h1>{{ msg }}</h1>
-    <v-card class="board" v-on:keyup="keyHandler()" :key="actions">
+    <v-card
+      class="board"
+      v-touch="{
+        left: () => left(),
+        right: () => right(),
+        up: () => up(),
+        down: () => down()
+      }"
+      v-on:keyup="keyHandler()"
+      :key="actions"
+    >
       <v-layout row no-gutters v-for="row in size" :key="'r' + row">
         <v-flex
           v-for="column in size"
@@ -158,9 +168,6 @@ export default {
         Enter: 'enter',
       };
       this.direction(keyCodes[e.code] || undefined);
-    },
-    mobileHandler(event) {
-      this.mobileEvent = event.acceleration.x;
     },
     direction(direction) {
       switch (direction) {
@@ -331,7 +338,7 @@ export default {
   },
   created() {
     // document.addEventListener('keyup', this.keyHandler);
-    window.addEventListener('devicemotion', this.mobileHandler, true);
+    // window.addEventListener('touchmove', this.mobileHandler, true);
   },
   mounted() {
     this.init();

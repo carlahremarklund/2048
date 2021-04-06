@@ -55,14 +55,11 @@
         <v-card-title style="justify-content: center; background-color: #D32F2F; color: white;">
           <strong>GAME OVER</strong>
         </v-card-title>
-
         <v-card-text>
           <br>
-          <strong> FINAL POINTS: </strong>
+          <strong> FINAL POINTS: {{ score }}</strong>
         </v-card-text>
-
         <v-divider></v-divider>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -88,7 +85,13 @@
     sm="12"
     xs="12"
   >
-    <Scoreboard :board="allTiles" :actions="actions" :boardSize="size"></Scoreboard>
+    <Scoreboard
+      v-on:score="getScore"
+      v-on:name="setName"
+      :board="allTiles"
+      :actions="actions"
+      :boardSize="size"
+    />
   </v-col>
   </v-row>
   </div>
@@ -121,6 +124,8 @@ export default {
       update: false,
       lastStep: null,
       isGameOver: false,
+      score: 0,
+      name: '',
     };
   },
   computed: {
@@ -152,7 +157,6 @@ export default {
       switch (direction) {
         case 'up':
           this.up();
-          // this.addRandomTile();
           break;
         case 'down':
           this.down();
@@ -165,6 +169,7 @@ export default {
           break;
         case 'enter':
           this.isGameOver = !this.isGameOver;
+          this.setScore();
           break;
         default:
           break;
@@ -198,7 +203,6 @@ export default {
       colDir -1 ^
       colDir +1 ˅
       */
-      // Handle reverse looping for "negative" directions
       if (this.isGameOver) {
         return;
       }
@@ -234,6 +238,9 @@ export default {
       }
       if (realMove) {
         this.isGameOver = !this.hasMoves();
+        if (this.isGameOver) {
+          this.setScore();
+        }
       }
     },
     tileStep(rowDir, colDir, currentTileRow, currentTileCol, copyTiles, key, value, realMove) {
@@ -287,7 +294,7 @@ export default {
       }
       return moves;
     },
-    initializeMatrix() {
+    initializeBoard() {
       for (let i = 0; i < this.size; i += 1) {
         for (let j = 0; j < this.size; j += 1) {
           Vue.set(this.allTiles, `${i}-${j}`, undefined);
@@ -295,8 +302,17 @@ export default {
       }
       this.isGameOver = false;
     },
+    getScore(value) {
+      this.score = value;
+    },
+    setScore() {
+      this.$store.commit('addToHighcore', { score: this.score, name: this.name });
+    },
+    setName(value) {
+      this.name = value;
+    },
     init() {
-      this.initializeMatrix();
+      this.initializeBoard();
       this.initialized = true;
       this.actions = -2;
       this.addRandomTile();

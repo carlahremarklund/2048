@@ -5,6 +5,14 @@
 <div>
   <h1 style="text-align: center; padding-bottom: 4rem;">Scoreboard</h1>
   <v-card class='mx-auto' max-width='400'>
+    <v-card-title>
+      <v-text-field
+      @change="nameChanged"
+      label="NAME"
+      hide-details="auto"
+      v-model="name"
+    ></v-text-field>
+    </v-card-title>
     <v-list-item two-line>
       <v-list-item-content>
         <v-list-item-title class='headline'> Points </v-list-item-title>
@@ -47,11 +55,15 @@
     <v-slider
       :value="score"
       color="#ef6c00"
-      max="2048"
+      :max="_.get($store.state.highscores, `[0]['score']`, 2048)"
     ></v-slider>
-
+    <v-card-text>
+      HIGH SCORES
+      </v-card-text>
     <v-list class='transparent'>
-      <v-list-item v-for='item in topscore' :key='item.id'>
+      <v-list-item v-for="item in $store.state.highscores"
+        :key='item.id'
+      >
         <v-list-item-title class="text-start">{{ item.name }}</v-list-item-title>
 
         <v-list-item-subtitle class='text-center'>
@@ -85,20 +97,7 @@ export default {
 
   data() {
     return {
-      topscore: [
-        {
-          name: 'Donald Duck',
-          score: '258.000',
-        },
-        {
-          name: 'Forrest Gump',
-          score: '128.000',
-        },
-        {
-          name: 'Cartman',
-          score: '98.000',
-        },
-      ],
+      name: null,
     };
   },
   computed: {
@@ -107,6 +106,7 @@ export default {
       this._.map(JSON.parse(JSON.stringify(this.board)), (value) => {
         returnScore += parseInt(value, Number);
       });
+      this.sendScore(returnScore);
       return returnScore;
     },
     freeTiles() {
@@ -114,7 +114,13 @@ export default {
       return this.boardSize ** 2 - this._.size(JSON.parse(JSON.stringify(this.board)));
     },
   },
-  methods: {},
-  mounted() {},
+  methods: {
+    sendScore(value) {
+      this.$emit('score', value);
+    },
+    nameChanged() {
+      this.$emit('name', this.name);
+    },
+  },
 };
 </script>

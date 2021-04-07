@@ -6,10 +6,9 @@
   height: 6rem;
   min-width: 4rem;
   min-height: 5rem;
-  background: red;
-    display: table;
-    width: 100%;
-    height: 100%;
+  display: table;
+  width: 100%;
+  height: 100%;
 }
 </style>
 

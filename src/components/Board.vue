@@ -338,6 +338,7 @@ export default {
     setName(value) {
       this.name = value;
       this.nameError = false;
+      this.$store.commit('setName', this.name);
     },
     init() {
       if (this.name === '') {
@@ -355,15 +356,14 @@ export default {
       } else {
         this.allTiles = this.$store.state.allTiles;
         this.actions = this.$store.state.actions;
+        this.name = this.$store.state.name;
       }
     },
   },
   created() {
     document.addEventListener('keyup', this.keyHandler);
-    // window.addEventListener('touchmove', this.mobileHandler, true);
   },
   mounted() {
-    // this.init();
   },
 };
 </script>

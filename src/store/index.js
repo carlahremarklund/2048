@@ -10,6 +10,7 @@ export default new Vuex.Store({
     allTiles: {},
     playing: false,
     actions: -2,
+    name: '',
   },
   mutations: {
     addToHighcore(state, payload) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     },
     isPlaying(state, payload) {
       state.playing = payload;
+    },
+    setName(state, payload) {
+      state.name = payload;
     },
   },
   getters: {},

@@ -104,11 +104,6 @@
     />
   </v-col>
   </v-row>
-  <v-text-field
-      label="Orientation"
-      hide-details="auto"
-      v-model="mobileEvent"
-    ></v-text-field>
   </div>
 </template>
 
@@ -141,7 +136,6 @@ export default {
       isGameOver: false,
       score: 0,
       name: '',
-      mobileEvent: null,
     };
   },
   computed: {
@@ -249,6 +243,8 @@ export default {
       if (dir !== this.lastStep) {
         if (realMove) {
           this.addRandomTile();
+          this.$store.commit('currentBoard', this.allTiles);
+          this.$store.commit('actions', this.actions);
         }
         return true;
       }
@@ -256,6 +252,7 @@ export default {
         this.isGameOver = !this.hasMoves();
         if (this.isGameOver) {
           this.setScore();
+          this.$store.commit('isPlaying', false);
         }
       }
     },
@@ -328,16 +325,21 @@ export default {
       this.name = value;
     },
     init() {
-      this.initializeBoard();
-      this.initialized = true;
-      this.actions = -2;
-      this.addRandomTile();
-      this.addRandomTile();
-      this.isGameOver = false;
+      if (!this.$store.state.playing) {
+        this.initializeBoard();
+        this.initialized = true;
+        this.actions = -2;
+        this.addRandomTile();
+        this.addRandomTile();
+        this.isGameOver = false;
+      } else {
+        this.allTiles = this.$store.state.allTiles;
+        this.actions = this.$store.state.actions;
+      }
     },
   },
   created() {
-    // document.addEventListener('keyup', this.keyHandler);
+    document.addEventListener('keyup', this.keyHandler);
     // window.addEventListener('touchmove', this.mobileHandler, true);
   },
   mounted() {

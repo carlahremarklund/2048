@@ -34,7 +34,6 @@
         up: () => up(),
         down: () => down()
       }"
-      v-on:keyup="keyHandler()"
       :key="actions"
     >
       <v-layout row no-gutters v-for="row in size" :key="'r' + row">

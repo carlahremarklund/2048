@@ -280,9 +280,8 @@ export default {
       const next = `${currentTileRow + rowDir}-${currentTileCol + colDir}`;
       const isCollision = this.allTiles[next] !== undefined;
       if (isWall) {
-        // Hanlde Wall
+        // Do nothing, move on
       } else if (isCollision) {
-        // Handle Collision
         this.handleCollision(key, next, realMove);
       } else {
         this.takeStep(key, next, value, realMove);

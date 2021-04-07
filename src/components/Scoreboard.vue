@@ -59,6 +59,7 @@
     <v-slider
       :value="score"
       color="#ef6c00"
+      label="Top score"
       :max="_.get($store.state.highscores, `[0]['score']`, 2048)"
     ></v-slider>
     <v-card-text>

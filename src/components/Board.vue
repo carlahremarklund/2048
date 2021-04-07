@@ -346,7 +346,7 @@ export default {
         this.overlay = true;
         return;
       }
-      if (!this.$store.state.playing) {
+      if (!this.$store.state.playing || this.isGameOver) {
         this.initializeBoard();
         this.initialized = true;
         this.actions = -2;

@@ -354,9 +354,9 @@ export default {
         this.addRandomTile();
         this.isGameOver = false;
       } else {
+        this.overlay = false;
         this.allTiles = this.$store.state.allTiles;
         this.actions = this.$store.state.actions;
-        this.name = this.$store.state.name;
       }
     },
   },
@@ -364,6 +364,7 @@ export default {
     document.addEventListener('keyup', this.keyHandler);
   },
   mounted() {
+    this.init();
   },
 };
 </script>

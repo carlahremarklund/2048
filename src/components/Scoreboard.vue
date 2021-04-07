@@ -131,5 +131,11 @@ export default {
       this.$emit('name', this.name);
     },
   },
+  mounted() {
+    if (this.$store.state.name !== '') {
+      this.name = this.$store.state.name;
+      this.nameChanged();
+    }
+  },
 };
 </script>

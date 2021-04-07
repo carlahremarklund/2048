@@ -55,6 +55,17 @@
           />
         </v-flex>
       </v-layout>
+      <v-overlay
+          :absolute="true"
+          :value="overlay"
+        >
+          <v-btn
+            color="success"
+            @click=" ()=> { overlay = false; init(); }"
+          >
+            {{ nameError? 'Enter name' : 'Start' }}
+          </v-btn>
+        </v-overlay>
     </v-card>
     <v-dialog
       v-model="isGameOver"
@@ -101,6 +112,7 @@
       :board="allTiles"
       :actions="actions"
       :boardSize="size"
+      :nameError="nameError"
     />
   </v-col>
   </v-row>
@@ -136,6 +148,8 @@ export default {
       isGameOver: false,
       score: 0,
       name: '',
+      overlay: true,
+      nameError: false,
     };
   },
   computed: {
@@ -323,8 +337,14 @@ export default {
     },
     setName(value) {
       this.name = value;
+      this.nameError = false;
     },
     init() {
+      if (this.name === '') {
+        this.nameError = true;
+        this.overlay = true;
+        return;
+      }
       if (!this.$store.state.playing) {
         this.initializeBoard();
         this.initialized = true;
@@ -343,7 +363,7 @@ export default {
     // window.addEventListener('touchmove', this.mobileHandler, true);
   },
   mounted() {
-    this.init();
+    // this.init();
   },
 };
 </script>

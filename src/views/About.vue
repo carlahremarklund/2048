@@ -1,7 +1,16 @@
+<style scoped>
+.about {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+</style>
 <template>
   <div class="about">
     <h1>The Game of 2048</h1>
-    <p style="padding-top: 4rem; width: 36rem; text-align: center">
+    <p style="padding: 2rem; width: 26rem; text-align: center">
       2048 is a game where you combine numbered tiles in order to gain a higher
       numbered tile. In this game you start with two tiles, the lowest possible
       number available is two. Then you will play by combining the tiles with

@@ -8,8 +8,12 @@
     <v-card-title>
       <v-text-field
       @change="nameChanged"
+      ref="nameInput"
       label="NAME"
-      hide-details="auto"
+      :hide-details="!nameError"
+      :autofocus="nameError"
+      :error="nameError"
+      error-messages="NAME is required"
       v-model="name"
     ></v-text-field>
     </v-card-title>
@@ -92,6 +96,11 @@ export default {
     boardSize: {
       type: Number,
       required: true,
+    },
+    nameError: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 
